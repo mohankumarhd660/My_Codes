@@ -1,86 +1,95 @@
+
 public class Queue {
     public final int SIZE = 4;
-    int f=-1,r=-1;
+    int f = -1, r = -1;  // f = Front, r = Rear
     int q[] = new int[SIZE];
-    boolean isEmpty()
-    {
-        if(f==-1)
-            return true;
-        else
-            return false;
-    }boolean isFull()
-    {
-        if (f == SIZE-1)
-        {
-            return true;
-        }else{
-            return false;
-        }
+
+    boolean isEmpty() {
+        return f == -1;
     }
-    void add(int ele)
-    {
-        if(f==-1)
-        {
-            r++;
-            q[++f]=ele;
-        }
-        else if(!isFull())
-        {
-            q[++f]=ele;
-        }else{
+
+    boolean isFull() {
+        return r == SIZE - 1;
+    }
+
+    void add(int ele) {
+        if (isFull()) {
             System.out.println("The Queue is Full");
+            return;
+        }
+
+        if (isEmpty()) {
+            f = 0;
+        }
+
+        q[++r] = ele;
+    }
+
+    void remove() {
+        if (isEmpty()) {
+            System.out.println("The Queue is Empty");
+            return;
+        }
+
+        System.out.println("Removed element: " + q[f]);
+
+        if (f == r) {
+            // Last element removed
+            f = -1;
+            r = -1;
+        } else {
+            f++;
         }
     }
 
-    void remove()
-    {
-        if(!isEmpty())
-        {
-            r++;
-        }else{
+    void display() {
+        if (isEmpty()) {
             System.out.println("The Queue is Empty");
+            return;
+        }
+
+        System.out.println("The Elements in a Queue:");
+        for (int i = f; i <= r; i++) {
+            System.out.println(q[i]);
         }
     }
 
-    void display()
-    {
-        if(!isEmpty())
-        {
-            System.out.println("The Elements in a Queue : ");
-            for(int i = r;i<=f;i++)
-                {
-                    System.out.println(q[i]);
-                }   
-        }else{
+    int peek() {
+        if (isEmpty()) {
             System.out.println("The Queue is Empty");
-        }
-    }
-    int peek()
-    {
-        if(!isEmpty())
-        {
-            return q[r];
-        }else{
             return -1;
         }
+
+        return q[f];
     }
+
     public static void main(String[] args) {
         Queue queue = new Queue();
+
         queue.add(1);
         queue.display();
+
         queue.add(2);
         queue.display();
+
         queue.add(3);
         queue.display();
+
         queue.add(4);
         queue.display();
+
         queue.remove();
         queue.display();
+
         queue.remove();
         queue.display();
+
         queue.remove();
         queue.display();
+
         queue.remove();
         queue.display();
+
+        queue.remove(); // Tests removing from an empty queue
     }
 }
